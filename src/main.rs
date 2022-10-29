@@ -3,6 +3,8 @@ use yew_router::prelude::*;
 
 use chrono::Local;
 
+use  std::f64::consts::*;
+
 #[derive(Clone, Routable, PartialEq)]
 enum Route {
     // #[at("/")]
@@ -30,23 +32,114 @@ fn round_str(value : f64) -> String{
 fn eq_str(id:i64) -> String{
     let eq: &str;
     match id {
-        1 => eq = "\\log_2 t",
+        1 => eq = "y= \\lceil 3\\sin \\left( 10\\pi x \\right)+1 \\rceil \\times 10",
+        2 => eq = "y= \\lceil 2\\sin \\left( 10\\pi x \\right)+4 \\rceil \\times 10",
+        3 => eq = "y=\\lceil 200 \\times \\frac{x+1}{x^{2}+x+1} \\rceil \\times 10",
+        4 => eq = "y=\\lceil 200 \\times \\frac{x+1}{x^{2}+x+1} \\rceil \\times 10",
+        5 => eq = "y=\\lceil 50 \\times \\frac{2x^{2}-x+1}{4x^{2}-x+1} \\rceil \\times 10",
+        6 => eq = "y=\\lceil 30 \\times \\frac{2x^{2}-x+1}{4x^{2}-x+1} \\rceil \\times 10",
+        7 => eq = "y=\\lceil 100 \\times \\frac{2x^{2}-x+1}{4x^{2}-x+1} \\rceil \\times 10",
+        8 => eq = "y=\\lceil 350 \\times \\ln \\left( e-x \\right) \\rceil \\times 10",
+        9 => eq = "y=\\lceil 500 \\times \\ln \\left( e-x \\right) \\rceil \\times 10",
+        10=> eq = "y=\\lceil 400 \\times \\left( (\\frac{1}{2}+\\frac{x}{4} \\right)\\sqrt{1-x}+\\frac{1}{2}) \\rceil \\times 10",
+        11=> eq = "y=\\lceil 100 \\times \\left( [\\frac{1}{2}+\\frac{x}{4} \\right)\\sqrt{1-x}+\\frac{1}{2}) \\rceil \\times 10",
+        12=> eq = "y=\\lceil 40 \\times \\left( [\\frac{1}{2}+\\frac{x}{4} \\right)\\sqrt{1-x}+\\frac{1}{2}) \\rceil \\times 10",
+        13=> eq = "y=\\lceil 150 \\times \\frac{4x+1}{4x^{2}+2x+1}\\rceil \\times 10",
+        14=> eq = "y=\\lceil 200 \\times \\frac{4x+1}{4x^{2}+2x+1}\\rceil \\times 10",
+        15=> eq = "y=\\lceil 20 \\times (-8x^{5}+32x^{4}-42x^{3}+22x^{2}-\\frac{9}{2}x+1) \\rceil \\times 10",
+        16=> eq = "y=\\lceil 50 \\times (-8x^{5}+32x^{4}-42x^{3}+22x^{2}-\\frac{9}{2}x+1) \\rceil \\times 10",
         _ => eq = "\\mathrm{Error!}",
     }
     return eq.to_string();
 }
 
-fn calc(time:f64, id:i64) -> i64{
+fn sin_expA(time:f64) -> f64{
+    (3.0 * (10.0 * PI * time).sin() + 1.0).ceil() * 10.0
+}
+
+fn sin_expB(time:f64) -> f64{
+    (2.0 * (10.0 * PI * time).sin() + 4.0).ceil() * 10.0
+}
+
+fn frac_expA(time:f64) -> f64{
+    (time + 1.0)/(time*time + time + 1.0)
+}
+
+fn frac_expB(time:f64) -> f64{
+    (2.0*time*time - time + 1.0)/(4.0*time*time - time + 1.0)
+}
+
+fn frac_expC(time:f64) -> f64{
+    (4.0*time + 1.0)/(4.0*time*time + 2.0*time + 1.0)
+}
+
+fn ln_exp(time:f64) -> f64{
+    (E - time).ln()
+}
+
+fn sqrt_exp(time:f64) -> f64{
+    (1.0/2.0 + time/4.0) * (1.0 + time).sqrt() + 1.0/2.0
+}
+
+fn whole_exp(time:f64) -> f64{
+    -8.0*time.powi(5) + 32.0*time.powi(4) - 42.0*time.powi(3) + 22.0*time.powi(2) - (9.0/2.0)*time + 1.0
+}
+
+fn calc(time:f64, id:i64) -> f64{
     let value: i64;
     match id {
         1 => {
-            value = time.log(2.0) as i64;
+            sin_expA(time)
+        },
+        2 => {
+            sin_expB(time)
+        },
+        3 => {
+            (200.0 * frac_expA(time)).ceil() * 10.0
+        },
+        4 => {
+            (200.0 * frac_expA(time)).ceil() * 10.0
+        },
+        5 => {
+            (50.0 * frac_expB(time)).ceil() * 10.0
+        },
+        6 => {
+            (30.0 * frac_expB(time)).ceil() * 10.0
+        },
+        7 => {
+            (100.0 * frac_expB(time)).ceil() * 10.0
+        },
+        8 => {
+            (350.0 * ln_exp(time)).ceil() * 10.0
+        },
+        9 => {
+            (500.0 * ln_exp(time)).ceil() * 10.0
+        },
+        10 => {
+            (400.0 * sqrt_exp(time)).ceil() * 10.0
+        },
+        11 => {
+            (100.0 * sqrt_exp(time)).ceil() * 10.0
+        },
+        12 => {
+            (40.0 * sqrt_exp(time)).ceil() * 10.0
+        },
+        13 => {
+            (150.0 * frac_expC(time)).ceil() * 10.0
+        },
+        14 => {
+            (200.0 * frac_expC(time)).ceil() * 10.0
+        },
+        15 => {
+            (20.0 * whole_exp(time)).ceil() * 10.0
+        },
+        16 => {
+            (50.0 * whole_exp(time)).ceil() * 10.0
         },
         _ => {
-            value = 99999999;
+             99999999.0
         },
     }
-    return value;
 }
 
 fn switch(route: &Route) -> Html {
