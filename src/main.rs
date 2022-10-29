@@ -1,5 +1,3 @@
-use num::*;
-
 use yew::prelude::*;
 use yew_router::prelude::*;
 
@@ -86,13 +84,13 @@ impl Component for Model {
         }
     }
 
-    fn update(&mut self, _ctx: &Context<Self>, msg: Self::Message) -> bool {
+    fn update(&mut self, _ctx: &Context<Self>, _msg: Self::Message) -> bool {
         true
     }
 
     fn view(&self, ctx: &Context<Self>) -> Html {
         // This gives us a component's "`Scope`" which allows us to send messages, etc to the component.
-        let link = ctx.link();
+        let _link = ctx.link();
         html! {
             <div id="app">
                 <BrowserRouter>
