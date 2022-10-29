@@ -1,4 +1,25 @@
-#value {
-  font-size: 25vw;
+#eq {
+  font-size: 10vw;
+  text-align: center;
+}
+
+#price{
+  text-align: center;
+}
+
+#price #value {
+  font-size: 20vw;
+}
+
+#price #yen {
+  font-size: 5vw;
+}
+
+#time {
+  font-size: 3vw;
+}
+
+#reload{
+  font-size: 2vw;
   text-align: center;
 }
