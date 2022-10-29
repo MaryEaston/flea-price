@@ -11,8 +11,8 @@ enum Route {
     Home,
     #[at("/post/:id")]
     Post { id: String },
-    #[at("/P1")]
-    P1,
+    #[at("/eq/:id")]
+    Equation { id: i64 },
 }
 
 fn get_t() -> i64{
@@ -21,8 +21,27 @@ fn get_t() -> i64{
     return t;
 }
 
-fn calc(time:i64) -> i64{
-    (time as f64).log(2.0) as i64
+fn eq_str(id:i64) -> String{
+    let eq: &str;
+    match id {
+        1 => eq = "\\log_2 t",
+        _ => eq = "\\mathrm{Error!}",
+    }
+    return eq.to_string();
+}
+
+fn calc(time:i64, id:i64) -> i64{
+    let value: i64;
+    let time: i64 = time / 420;
+    match id {
+        1 => {
+            value = (time as f64).log(2.0) as i64;
+        },
+        _ => {
+            value = 99999999;
+        },
+    }
+    return value;
 }
 
 fn switch(route: &Route) -> Html {
@@ -34,13 +53,13 @@ fn switch(route: &Route) -> Html {
         Route::Post { id } => {
             html! {<p>{format!("You are looking at Post {}", id)}</p>}
         },
-        Route::P1 => {
+        Route::Equation { id } => {
             html! {
                 <div id="price">
-                    <p id="eq">{"$\\log_2 t$"}</p>
+                    <p id="eq">{"$"}{eq_str(*id)}{"$"}</p>
                     <p id="time">{"$t = "}{time}{"$分"}</p>
                     <p id="prise">
-                        <span id="value">{calc(time)}</span>
+                        <span id="value">{calc(time, *id)}</span>
                         <span id="yen">{"円"}</span>
                     </p>
                 </div>
