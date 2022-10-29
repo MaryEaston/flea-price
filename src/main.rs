@@ -78,7 +78,7 @@ fn ln_exp(time:f64) -> f64{
 }
 
 fn sqrt_exp(time:f64) -> f64{
-    (1.0/2.0 + time/4.0) * (1.0 + time).sqrt() + 1.0/2.0
+    (1.0/2.0 + time/4.0) * (1.0 - time).sqrt() + 1.0/2.0
 }
 
 fn whole_exp(time:f64) -> f64{
