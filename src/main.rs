@@ -1,27 +1,30 @@
 use yew::prelude::*;
 use yew_router::prelude::*;
 
-use chrono::*;
+use chrono::Local;
 
 #[derive(Clone, Routable, PartialEq)]
 enum Route {
-    #[at("/")]
-    Home,
-    #[at("/post/:id")]
-    Post { id: String },
+    // #[at("/")]
+    // Home,
     #[at("/eq/:id")]
     Equation { id: i64 },
 }
 
 fn time_str() -> String{
-    let dt = Utc::now();
+    let dt = Local::now();
     return format!("{}", dt.format("%H:%M:%S"));
 }
 
-fn get_t() -> i64{
+fn get_t() -> f64{
     let sec: i64 = Local::now().timestamp() - 1667091600;
-    let t: i64 = sec / 60;
-    return t;
+    let time: f64 = (sec as f64) / 60.0 / 420.0;
+    return time;
+}
+
+fn round_str(value : f64) -> String{
+    let rounded = (value * 100.0).round() / 100.0;
+    return format!("{}", rounded);
 }
 
 fn eq_str(id:i64) -> String{
@@ -33,12 +36,11 @@ fn eq_str(id:i64) -> String{
     return eq.to_string();
 }
 
-fn calc(time:i64, id:i64) -> i64{
+fn calc(time:f64, id:i64) -> i64{
     let value: i64;
-    let time: i64 = time / 420;
     match id {
         1 => {
-            value = (time as f64).log(2.0) as i64;
+            value = time.log(2.0) as i64;
         },
         _ => {
             value = 99999999;
@@ -48,14 +50,13 @@ fn calc(time:i64, id:i64) -> i64{
 }
 
 fn switch(route: &Route) -> Html {
-    let time: i64 = get_t();
+    let time : f64 = get_t();
     match route {
-        Route::Home => {
-            html! { <h1>{ "Home" }</h1> }
-        },
-        Route::Post { id } => {
-            html! {<p>{format!("You are looking at Post {}", id)}</p>}
-        },
+        // Route::Home => {
+        //     html! {
+        //         <h1>{ "Home" }</h1>
+        //     }
+        // },
         Route::Equation { id } => {
             html! {
                 <>
@@ -70,7 +71,10 @@ fn switch(route: &Route) -> Html {
                             <span id="yen">{"円"}</span>
                         </p>
                         <p id="text">{time_str()}</p>
-                        <p id="text">{"$t = "}{time}{"$ [分]"}</p>
+                        <p id="text">{"$t = "}{round_str(time)}{"$ [$\\times$ 420 分]"}</p>
+                    </div>
+                    <div id="footer">
+                        <p id="text"><a href="">{"更新"}</a></p>
                     </div>
                 </>
             }
@@ -113,7 +117,6 @@ impl Component for Model {
                 <BrowserRouter>
                     <Switch<Route> render={Switch::render(switch)} />
                 </BrowserRouter>
-                <p id="reload"><a href="">{"更新"}</a></p>
             </div>
             </>
         }
