@@ -3,6 +3,8 @@ use yew_router::prelude::*;
 
 use chrono::Local;
 
+use  std::f64::consts::*;
+
 #[derive(Clone, Routable, PartialEq)]
 enum Route {
     // #[at("/")]
@@ -31,22 +33,113 @@ fn eq_str(id:i64) -> String{
     let eq: &str;
     match id {
         1 => eq = "\\log_2 t",
+        2 => eq = "\\log_2 t",
+        3 => eq = "\\log_2 t",
+        4 => eq = "\\log_2 t",
+        5 => eq = "\\log_2 t",
+        6 => eq = "\\log_2 t",
+        7 => eq = "\\log_2 t",
+        8 => eq = "\\log_2 t",
+        9 => eq = "\\log_2 t",
+        10=> eq = "\\log_2 t",
+        11=> eq = "\\log_2 t",
+        12=> eq = "\\log_2 t",
+        13=> eq = "\\log_2 t",
+        14=> eq = "\\log_2 t",
+        15=> eq = "\\log_2 t",
+        16=> eq = "\\log_2 t",
         _ => eq = "\\mathrm{Error!}",
     }
     return eq.to_string();
 }
 
-fn calc(time:f64, id:i64) -> i64{
+fn sin_expA(time:f64) -> f64{
+    (3.0 * (10.0 * PI * time).sin() + 1.0).ceil() * 10.0
+}
+
+fn sin_expB(time:f64) -> f64{
+    (2.0 * (10.0 * PI * time).sin() + 4.0).ceil() * 10.0
+}
+
+fn frac_expA(time:f64) -> f64{
+    (time + 1.0)/(time*time + time + 1.0)
+}
+
+fn frac_expB(time:f64) -> f64{
+    (2.0*time*time - time + 1.0)/(4.0*time*time - time + 1.0)
+}
+
+fn frac_expC(time:f64) -> f64{
+    (4.0*time + 1.0)/(4.0*time*time + 2.0*time + 1.0)
+}
+
+fn ln_exp(time:f64) -> f64{
+    (E - time).ln()
+}
+
+fn sqrt_exp(time:f64) -> f64{
+    (1.0/2.0 + time/4.0) * (1.0 + time).sqrt() + 1.0/2.0
+}
+
+fn whole_exp(time:f64) -> f64{
+    -8.0*time.powi(5) + 32.0*time.powi(4) - 42.0*time.powi(3) + 22.0*time.powi(2) - (9.0/2.0)*time + 1.0
+}
+
+fn calc(time:f64, id:i64) -> f64{
     let value: i64;
     match id {
         1 => {
-            value = time.log(2.0) as i64;
+            sin_expA(time)
+        },
+        2 => {
+            sin_expB(time)
+        },
+        3 => {
+            (200.0 * frac_expA(time)).ceil() * 10.0
+        },
+        4 => {
+            (200.0 * frac_expA(time)).ceil() * 10.0
+        },
+        5 => {
+            (50.0 * frac_expB(time)).ceil() * 10.0
+        },
+        6 => {
+            (30.0 * frac_expB(time)).ceil() * 10.0
+        },
+        7 => {
+            (100.0 * frac_expB(time)).ceil() * 10.0
+        },
+        8 => {
+            (350.0 * ln_exp(time)).ceil() * 10.0
+        },
+        9 => {
+            (500.0 * ln_exp(time)).ceil() * 10.0
+        },
+        10 => {
+            (400.0 * sqrt_exp(time)).ceil() * 10.0
+        },
+        11 => {
+            (100.0 * sqrt_exp(time)).ceil() * 10.0
+        },
+        12 => {
+            (40.0 * sqrt_exp(time)).ceil() * 10.0
+        },
+        13 => {
+            (150.0 * frac_expC(time)).ceil() * 10.0
+        },
+        14 => {
+            (200.0 * frac_expC(time)).ceil() * 10.0
+        },
+        15 => {
+            (20.0 * whole_exp(time)).ceil() * 10.0
+        },
+        16 => {
+            (50.0 * whole_exp(time)).ceil() * 10.0
         },
         _ => {
-            value = 99999999;
+             99999999.0
         },
     }
-    return value;
 }
 
 fn switch(route: &Route) -> Html {
