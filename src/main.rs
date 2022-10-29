@@ -9,7 +9,7 @@ use  std::f64::consts::*;
 enum Route {
     // #[at("/")]
     // Home,
-    #[at("/eq/:id")]
+    #[at("/flea-price/eq/:id")]
     Equation { id: i64 },
 }
 
