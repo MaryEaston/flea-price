@@ -37,8 +37,12 @@ fn switch(route: &Route) -> Html {
         Route::P1 => {
             html! {
                 <div id="price">
-                    <p id="value">{calc(time)}</p>
-                    <p>{"t = "}{time}{"分"}</p>
+                    <p id="eq">{"$\\log_2 t$"}</p>
+                    <p id="time">{"$t = "}{time}{"$分"}</p>
+                    <p id="prise">
+                        <span id="value">{calc(time)}</span>
+                        <span id="yen">{"円"}</span>
+                    </p>
                 </div>
             }
         }
@@ -75,7 +79,7 @@ impl Component for Model {
                 <BrowserRouter>
                     <Switch<Route> render={Switch::render(switch)} />
                 </BrowserRouter>
-                <a href="">{"reload"}</a>
+                <p id="reload"><a href="">{"reload"}</a></p>
             </div>
         }
     }
