@@ -1,7 +1,7 @@
 use yew::prelude::*;
 use yew_router::prelude::*;
 
-use chrono::Local;
+use chrono::*;
 
 #[derive(Clone, Routable, PartialEq)]
 enum Route {
@@ -13,8 +13,13 @@ enum Route {
     Equation { id: i64 },
 }
 
+fn time_str() -> String{
+    let dt = Utc::now();
+    return format!("{}", dt.format("%H:%M:%S"));
+}
+
 fn get_t() -> i64{
-    let sec: i64 = Local::now().timestamp() - 1666985400;
+    let sec: i64 = Local::now().timestamp() - 1667091600;
     let t: i64 = sec / 60;
     return t;
 }
@@ -53,14 +58,21 @@ fn switch(route: &Route) -> Html {
         },
         Route::Equation { id } => {
             html! {
-                <div id="price">
-                    <p id="eq">{"$"}{eq_str(*id)}{"$"}</p>
-                    <p id="time">{"$t = "}{time}{"$分"}</p>
-                    <p id="prise">
-                        <span id="value">{calc(time, *id)}</span>
-                        <span id="yen">{"円"}</span>
-                    </p>
-                </div>
+                <>
+                    <div id="eq_box">
+                        <p id="text">{"価格関数 :"}</p>
+                        <p id="eq">{"$"}{eq_str(*id)}{"$"}</p>
+                    </div>
+                    <div id="now">
+                        <p id="text">{"ただいまの価格 :"}</p>
+                        <p id="price">
+                            <span id="value">{calc(time, *id)}</span>
+                            <span id="yen">{"円"}</span>
+                        </p>
+                        <p id="text">{time_str()}</p>
+                        <p id="text">{"$t = "}{time}{"$ [分]"}</p>
+                    </div>
+                </>
             }
         }
     }
@@ -92,12 +104,18 @@ impl Component for Model {
         // This gives us a component's "`Scope`" which allows us to send messages, etc to the component.
         let _link = ctx.link();
         html! {
-            <div id="app">
+            <>
+            <div id="title">
+                <p>{"大岡山最終処分場"}</p>
+                <hr/>
+            </div>
+            <div id="main">
                 <BrowserRouter>
                     <Switch<Route> render={Switch::render(switch)} />
                 </BrowserRouter>
-                <p id="reload"><a href="">{"reload"}</a></p>
+                <p id="reload"><a href="">{"更新"}</a></p>
             </div>
+            </>
         }
     }
 }
