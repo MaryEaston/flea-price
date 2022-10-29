@@ -1,25 +1,49 @@
-#eq {
+body {
+  text-align: center;
+}
+
+#title {
   font-size: 10vw;
-  text-align: center;
+
+  hr {
+    border: none;
+    border-bottom: 1px solid #333;
+    width: 80%;
+    margin: auto;
+  }
 }
 
-#price{
-  text-align: center;
-}
-
-#price #value {
-  font-size: 20vw;
-}
-
-#price #yen {
-  font-size: 5vw;
-}
-
-#time {
+#text {
   font-size: 3vw;
 }
 
-#reload{
-  font-size: 2vw;
-  text-align: center;
+#eq_box {
+  margin-top: 8vw;
+  margin-bottom: 8vw;
+
+    #eq {
+    font-size: 10vw;
+    margin-top: -3vw;
+  }
+}
+
+#now {
+  margin-top: 8vw;
+  margin-bottom: 8vw;
+
+  #price {
+    margin-top: -5vw;
+
+    #value {
+      font-size: 20vw;
+    }
+  
+    #yen {
+      font-size: 5vw;
+    }
+  }
+}
+
+#reload {
+  font-size: 3vw;
 }
