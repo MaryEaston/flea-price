@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Calculator+</title>
+
+    <link data-trunk rel="scss" type="text/css" href="styles.scss" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/modern-css-reset/dist/reset.min.css"
+    />
+
+    <link data-trunk rel="copy-file" href="manifest.json" />
+    <link rel="manifest" href="manifest.json" />
+
+    <link data-trunk rel="copy-dir" href="images/" />
+    <link rel="icon" href="images/icon_192.png" />
+
+    <script>
+      function handle(event) {
+        event.preventDefault();
+      }
+
+      window.onload = function () {
+        document.addEventListener("touchmove", handle, { passive: false });
+        document.addEventListener("mousewheel", handle, { passive: false });
+      };
+    </script>
+  </head>
+</html>
